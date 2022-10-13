@@ -99,6 +99,8 @@ guess5.style.height = "30px"
 guess5.style.width = "40px"
 guess5.style.backgroundColor = "#CE8054"
 
+let hintText = document.createElement("h1")
+hintText.style.color = "ivory"
 
 
 const footer = document.createElement("footer")
@@ -122,27 +124,46 @@ hint.style.boxShadow = "-3px 3px 3px 0px ivory"
 
 
 
-let numberGuess = Math.floor(Math.random() * 100 + 1)
+let numberGuess = Math.floor(Math.random() * 100) + 1;
+let possibleNum = [numberGuess, " or" , " " + Math.floor(Math.random()* 100 + 1)]
+// const removeComma = possibleNum.replaceAll(","," ")
 let count = 0
 go.addEventListener("click", function(event){
     event.preventDefault();
+    if( count == 0){ 
     guess1.textContent = input.value;
-
- if(input.textContent == numberGuess){
+    } 
+    if (count == 1){ 
+        guess2.textContent = input.value;
+    }
+    if (count == 2){ 
+        guess3.textContent = input.value;
+    }
+    if (count == 3){
+        guess4.textContent = input.value;
+    }
+    if (count == 4){ 
+        guess5.textContent = input.value;
+    }
+ if(input.value == numberGuess){
     alert("You did it! I'm proud of you")
- } else if (input.textContent < numberGuess && count < 5){ 
+ } else if (input.value < numberGuess && count < 4){ 
     count++
     alert('↑')
- } else if (input.textContent > numberGuess && count <5){ 
+ } else if (input.value > numberGuess && count < 4){ 
     count++ 
     alert('↓')
  } else (
-    alert("Awww, not quite. But try again!")
+    alert("Awww, not quite. But Reset try again!")
  )
  })
 
+hint.addEventListener("click", function(){
+    console.log(possibleNum)
+    hintText.textContent = possibleNum, removeComma
+})
 guessingGame.append(bigBox)
-bigBox.append(title, direction, form, lowerSection, footer)
+bigBox.append(title, direction, form, lowerSection, footer, hintText)
 form.append(input, go)
 lowerSection.append(guess1, guess2, guess3, guess4, guess5)
 footer.append(reset, hint)
